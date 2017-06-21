@@ -13,7 +13,7 @@ extra tables for current releases, releases in progress, and releases in test.
 **This application is designed as a proof of concept for using Node and VueJS in collaboration.
 In it's current form, it is not intended to be used in a commerical or production environment**
 
-**How to run:**
+**How to install and run:**
 
 In order to run the releaseboard (whiteboard) application, you need to install [docker](https://www.docker.com/).
 Docker is a container based platform that allows you to create portable applications. 
