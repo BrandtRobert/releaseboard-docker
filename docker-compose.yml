@@ -1,0 +1,20 @@
+version: "3"
+services:
+  vue-app:
+    build: ./ReleaseBoard/
+    ports:
+      - 80:80
+    links:
+      - api
+  api:
+    build: ./ReleaseBoardApi/
+    links:
+      - mongo
+    expose:
+      - 3000
+  mongo:
+    image: mongo:latest
+    volumes:
+      - /var/lib/mongo
+    expose:
+      - 27017
