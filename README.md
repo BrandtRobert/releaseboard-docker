@@ -25,6 +25,8 @@ docker-compose up -d
 ```
 That's it! The application should be up and running on http://localhost:80/
 
+*Windows Users: you can simply download or copy the Dockerfile from this repo, since you don't have curl*
+
 To stop the application at anytime, run:
 ```
 docker-compose stop
