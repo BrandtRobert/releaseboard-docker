@@ -7,7 +7,7 @@ services:
     links:
       - api
   api:
-    image: brandtrobert/releaseboard:api
+    image: brandtrobert/releaseboardapp:api
     links:
       - mongo
     expose:
