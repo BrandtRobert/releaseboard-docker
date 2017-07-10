@@ -10,6 +10,7 @@ services:
     build: ./ReleaseBoardApi/
     links:
       - mongo
+      - mysql
     expose:
       - 3000
   mongo:
@@ -18,3 +19,12 @@ services:
       - /var/lib/mongo
     expose:
       - 27017
+  mysql:
+    image: mysql:latest
+    volumes: 
+      - /var/lib/sql_data
+    environment: 
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: releasedb
+      MYSQL_USER: rb_user
+      MYSQL_PASSWORD: banana
