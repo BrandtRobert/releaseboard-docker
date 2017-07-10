@@ -1,45 +1,22 @@
 'use strict'
-var mongoose = require('mongoose')
-var Release = mongoose.model('releases')
-
-exports.get_all_releases = function (req, res) {
-  Release.find({}, function (err, release) {
-    if (err) {
-      res.send(err)
-    }
-    res.json(release)
-  })
-}
+var model = require('../models/rbmodel.js')
 
 exports.create_release = function (req, res) {
-  var newRelease = new Release(req.body)
-  newRelease.save(function (err, release) {
-    if (err) {
-      res.send(err)
-    }
-    res.json(release)
-  })
+  model.insert(req.body, (release) => { res.json(release) })
 }
 
 exports.update_release = function (req, res) {
-  Release.findOneAndUpdate({_id: req.params.id}, req.body, {
-    returnNewDocument: true
-  },
-  function (err, release) {
-    if (err) {
-      res.send(err)
-    }
-    res.json(release)
-  })
+  let toUpdate = req.body
+  toUpdate._id = req.params.id
+  model.update(toUpdate, (release) => { res.json(release) })
+}
+
+exports.get_all_releases = function (req, res) {
+  model.getReleases((releases) => { res.json(releases) })
 }
 
 exports.delete_release = function (req, res) {
-  Release.remove({
-    _id: req.params.id
-  }, function (err, release) {
-    if (err) {
-      res.send(err)
-    }
+  model.delete(req.params.id, () => {
     res.json({ message: 'Release deleted' })
   })
 }

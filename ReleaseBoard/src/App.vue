@@ -19,7 +19,7 @@
         </v-layout>
         <v-layout row mt-2>
           <v-flex xs12 text-xs-center>
-            <v-alert success dismissible v-model="success">Changes Saved!</v-alert>
+            <v-alert success transition="scale-transition" dismissible v-model="alert_success">Changes Saved!</v-alert>
           </v-flex>
         </v-layout>
         <new-release-dialog :showDialog="showReleaseModal" :submitRelease="addNewRelease"
@@ -54,7 +54,7 @@
         title: 'Envysion Engineering Team -- Releases and Versioning',
         headers: [],
         items: [],
-        success: false,
+        alert_success: false,
         showReleaseModal: false,
         showDeleteModal: false,
       }
@@ -63,6 +63,9 @@
       this.getTableData()
     },
     methods: {
+      set_success () {
+        this.alert_success = true
+      },
       getTableData () {
         requestHandler.getReleases((headers, items) => {
           this.headers = headers
@@ -72,7 +75,7 @@
       updateTable () {
         requestHandler.postChanges(this.items, (err) => { 
             this.getTableData()
-            this.success = true
+            this.set_success()
         })
       },
       addNewRelease (pack, release, version) {
@@ -85,7 +88,7 @@
           // figure out why getTableData doesn't update fast enough
           this.updateTable()
           this.showReleaseModal = false
-          this.success = true
+          this.set_success()
         })
       },
       closeReleaseModal () {
@@ -96,9 +99,8 @@
       },
       deleteSelected (items) {
         requestHandler.deleteSelectedReleases(items, () => {
-          this.getTableData()
+          this.updateTable()
           this.showDeleteModal = false
-          this.success = true 
         })
       }
     }

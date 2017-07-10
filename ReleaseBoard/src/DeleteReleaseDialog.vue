@@ -6,19 +6,21 @@
 					<v-card-title>Delete Releases</v-card-title>
 				</v-card-row>
 				<v-card-row>
-          <v-list subheader>
-            <v-subheader>Select the packages you want to delete</v-subheader>
-            <v-list-item v-for="item in items" :key="item._id">
-              <v-list-tile avatar>
-                <v-list-tile-action>
-                  <v-checkbox v-model="selected" :value="item._id"></v-checkbox>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                  <v-list-tile-title>{{ item.package }}</v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-            </v-list-item>
-          </v-list>
+          <v-card-text>
+            <v-list subheader>
+              <v-subheader>Select the packages you want to delete</v-subheader>
+              <v-list-item v-for="item in items" :key="item._id">
+                <v-list-tile avatar>
+                  <v-list-tile-action>
+                    <v-checkbox v-model="selected" :value="item._id"></v-checkbox>
+                  </v-list-tile-action>
+                  <v-list-tile-content>
+                    <v-list-tile-title>{{ item.package }}</v-list-tile-title>
+                  </v-list-tile-content>
+                </v-list-tile>
+              </v-list-item>
+            </v-list>
+          </v-card-text>
 				</v-card-row>
 				<v-card-row actions>
 					<v-btn class="error mr-1 white--text" v-on:click.native="remove(items)">Delete Selected</v-btn>
