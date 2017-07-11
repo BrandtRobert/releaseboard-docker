@@ -1,24 +1,19 @@
 version: "3"
 services:
   vue-app:
-    build: ./ReleaseBoard/
+    image: brandtrobert/releaseboardapp:vue-app-mysql
     ports:
       - 80:80
     links:
       - api
+    tty: true
   api:
-    build: ./ReleaseBoardApi/
+    image: brandtrobert/releaseboardapp:api-mysql
     links:
-      - mongo
       - mysql
     expose:
       - 3000
-  mongo:
-    image: mongo:latest
-    volumes:
-      - /var/lib/mongo
-    expose:
-      - 27017
+    tty: true
   mysql:
     image: mysql:latest
     volumes: 

@@ -4,11 +4,11 @@ FROM node:boron
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 # Install app dependencies
-COPY package.json /usr/src/app/
+COPY ./package.json /usr/src/app/
 RUN npm install
 # Bundle app source
 COPY . /usr/src/app
-#Expose port 3000
+# Expose port 3000
 EXPOSE 3000
-#Start the application
+# Start the application
 CMD [ "npm", "run", "prod" ]

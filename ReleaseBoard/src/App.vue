@@ -82,7 +82,8 @@
         let newRelease = {
           package: pack,
           release: release,
-          version: version
+          version: version,
+          merged: false
         }
         requestHandler.addNewRelease(newRelease, () => {
           // figure out why getTableData doesn't update fast enough
