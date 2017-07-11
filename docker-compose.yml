@@ -7,6 +7,7 @@ services:
     links:
       - api
     tty: true
+    restart: unless-stopped
   api:
     image: brandtrobert/releaseboardapp:api-mysql
     links:
@@ -14,6 +15,7 @@ services:
     expose:
       - 3000
     tty: true
+    restart: unless-stopped
   mysql:
     image: mysql:latest
     volumes: 
@@ -22,4 +24,5 @@ services:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: releasedb
       MYSQL_USER: rb_user
-      MYSQL_PASSWORD: banana
+      MYSQL_PASSWORD: banana        
+    restart: unless-stopped
