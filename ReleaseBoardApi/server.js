@@ -26,6 +26,10 @@ app.use((req, res) => {
   res.status(404).send({url: req.originalUrl + ' not found'})
 })
 
-app.listen(port)
+var server = app.listen(port)
 
 console.log('Release Board API server started on port: ' + port)
+
+module.exports.closeServer = () => {
+  server.close()
+}
