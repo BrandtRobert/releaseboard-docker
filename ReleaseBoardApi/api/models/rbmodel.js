@@ -4,20 +4,20 @@ var uuid = require('uuid')
 
 // Test connect
 
-// var connection = mysql.createConnection({
-//   user: 'brandt',
-//   password: 'Telecaster1',
-//   database: 'releasedb'
-// })
+var connection = mysql.createConnection({
+  user: 'brandt',
+  password: 'Telecaster1',
+  database: 'releasedb'
+})
 
 // Docker Connect
 
-var connection = mysql.createConnection({
-  host: 'mysql',
-  user: 'rb_user',
-  password: 'banana',
-  database: 'releasedb'
-})
+// var connection = mysql.createConnection({
+//   host: 'mysql',
+//   user: 'rb_user',
+//   password: 'banana',
+//   database: 'releasedb'
+// })
 
 connection.query(`
   CREATE TABLE IF NOT EXISTS releases (
@@ -35,7 +35,7 @@ connection.query(`
   })
 
 module.exports.insert = (release, callback) => {
-  let merged = (release.merged) ? 1 : 0
+  let merged = handleBool(release.merged)
   release._id = uuid().toString().replace(/-/g, '')
   connection.query('INSERT INTO releases VALUES (?,?,?,?,?)',
     [release._id, release.package, release.release, release.version, merged],
@@ -48,7 +48,7 @@ module.exports.insert = (release, callback) => {
 }
 
 module.exports.update = (release, callback) => {
-  let merged = (release.merged) ? 1 : 0
+  let merged = handleBool(release.merged)
   connection.query('UPDATE releases SET package = ?, `release` = ?, version = ?, merged = ? WHERE id = ?',
     [release.package, release.release, release.version, merged, release._id],
     (error) => {
@@ -66,8 +66,8 @@ module.exports.getReleases = (callback) => {
     }
     // Convert 1's and 0's to true/false
     data.map((r) => {
-      r.merged = !!+r.merged
-      r._id = r.id + '' // Make a copy of the id
+      r.merged = (r.merged === 1) ? 'true' : 'false'
+      r._id = r.id.slice(0) // Make a copy of the id
       delete r.id
     })
     callback(data)
@@ -82,4 +82,20 @@ module.exports.delete = (id, callback) => {
       }
       callback()
     })
+}
+
+/**
+ * Takes data of unknown boolean representation and returns it as either 1 or 0
+ * @param {*} unknown type
+ */
+function handleBool (unknown) {
+  if (typeof unknown === 'boolean') {
+    return (unknown) ? 1 : 0
+  } else if (typeof unknown === 'string') {
+    return (unknown === 'true') ? 1 : 0
+  } else if (typeof unknown === 'number') {
+    return (unknown === 0) ? 0 : 1
+  } else {
+    return 0
+  }
 }
