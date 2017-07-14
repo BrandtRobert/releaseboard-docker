@@ -1,6 +1,6 @@
 # Releaseboard
 
-*A white board app built on Docker with VueJS, Node (express), Vuetify, MySQL, and Nginx. Test with Mocha, Jasmine, Karma and PhantomJS*
+*A white board app built on Docker with VueJS, Node (express), Vuetify, MySQL, and Nginx. Tested with Mocha, Jasmine, Karma and PhantomJS*
 
 **This repository contains the source code for the application, however it is configured to be run as a multi-container docker
 application.**
