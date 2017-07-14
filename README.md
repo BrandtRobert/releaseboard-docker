@@ -1,4 +1,5 @@
 # Releaseboard
+
 *A white board app built on Docker with VueJS, Node (express), Vuetify, MySQL, and Nginx.*
 
 **This repository contains the source code for the application, however it is configured to be run as a multi-container docker
@@ -20,7 +21,6 @@ Docker is a container based platform that allows you to create portable applicat
 
 After downloading docker create a directory for the app to live, then run the following commands:
 ```
-curl https://raw.githubusercontent.com/BrandtRobert/releaseboard-docker/Convert_MySQL/docker-compose.yml > docker-compose.yml
 docker-compose up -d
 ```
 That's it! The application should be up and running on http://localhost:80/
