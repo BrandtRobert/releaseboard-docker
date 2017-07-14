@@ -1,20 +1,28 @@
 version: "3"
 services:
   vue-app:
-    image: brandtrobert/releaseboardapp:vue-app
+    image: brandtrobert/releaseboardapp:vue-app-mysql
     ports:
       - 80:80
     links:
       - api
+    tty: true
+    restart: unless-stopped
   api:
-    image: brandtrobert/releaseboardapp:api
+    image: brandtrobert/releaseboardapp:api-mysql
     links:
-      - mongo
+      - mysql
     expose:
       - 3000
-  mongo:
-    image: mongo:latest
-    volumes:
-      - /var/lib/mongo
-    expose:
-      - 27017
+    tty: true
+    restart: unless-stopped
+  mysql:
+    image: mysql:latest
+    volumes: 
+      - /var/lib/sql_data
+    environment: 
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: releasedb
+      MYSQL_USER: rb_user
+      MYSQL_PASSWORD: banana        
+    restart: unless-stopped

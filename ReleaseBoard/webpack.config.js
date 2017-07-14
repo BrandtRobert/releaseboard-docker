@@ -10,7 +10,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'public': path.resolve(__dirname, './public')
+      'public': path.resolve(__dirname, './public'),
+      'vue$': 'vue/dist/vue.esm.js'
     }
   },
   module: {
@@ -46,11 +47,6 @@ module.exports = {
         loader: ['style-loader', 'css-loader', 'stylus-loader']
       }
     ]
-  },
-  resolve: {
-    alias: {
-      'vue$': 'vue/dist/vue.esm.js'
-    }
   },
   devServer: {
     historyApiFallback: true,

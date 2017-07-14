@@ -19,7 +19,7 @@
         </v-layout>
         <v-layout row mt-2>
           <v-flex xs12 text-xs-center>
-            <v-alert success dismissible v-model="success">Changes Saved!</v-alert>
+            <v-alert success transition="scale-transition" dismissible v-model="alert_success">Changes Saved!</v-alert>
           </v-flex>
         </v-layout>
         <new-release-dialog :showDialog="showReleaseModal" :submitRelease="addNewRelease"
@@ -42,7 +42,7 @@
   import * as requestHandler from './requesthandler.js'
 
   export default {
-    name: app,
+    name: 'app',
     components: {
       DataTable,
       NewReleaseDialog,
@@ -54,15 +54,18 @@
         title: 'Envysion Engineering Team -- Releases and Versioning',
         headers: [],
         items: [],
-        success: false,
+        alert_success: false,
         showReleaseModal: false,
-        showDeleteModal: false,
+        showDeleteModal: false
       }
     },
     mounted() {
       this.getTableData()
     },
     methods: {
+      set_success () {
+        this.alert_success = true
+      },
       getTableData () {
         requestHandler.getReleases((headers, items) => {
           this.headers = headers
@@ -72,20 +75,20 @@
       updateTable () {
         requestHandler.postChanges(this.items, (err) => { 
             this.getTableData()
-            this.success = true
+            this.set_success()
         })
       },
       addNewRelease (pack, release, version) {
         let newRelease = {
           package: pack,
           release: release,
-          version: version
+          version: version,
+          merged: 'false'
         }
         requestHandler.addNewRelease(newRelease, () => {
-          // figure out why getTableData doesn't update fast enough
-          this.updateTable()
+          this.getTableData()
           this.showReleaseModal = false
-          this.success = true
+          this.set_success()
         })
       },
       closeReleaseModal () {
@@ -98,7 +101,6 @@
         requestHandler.deleteSelectedReleases(items, () => {
           this.getTableData()
           this.showDeleteModal = false
-          this.success = true 
         })
       }
     }
