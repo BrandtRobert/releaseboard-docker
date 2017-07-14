@@ -57,7 +57,7 @@ describe('Testing server responses to GET, PUT, POST, DELETE', (done) => {
       package: 'ServiceApp',
       release: '900',
       version: '5.67',
-      merged: 'false'
+      merged: 'true'
     }
     var url = baseURL + _id
     request.put(url, { form: updatedRelease }, (err, response, body) => {

@@ -1,11 +1,11 @@
 import axios from 'axios'
 import _ from 'lodash'
 
-var _server = axios.create({
+export var _server = axios.create({
   // Base url should be whatever the url of the Nginx server is
   // Nginx proxies all requests with '/releases' to http://api:3000
-  baseURL: 'http://localhost'
-  // baseURL: 'http://localhost:3000'
+  // baseURL: 'http://localhost'
+  baseURL: 'http://localhost:3000'
 })
 
 export function getReleases (callback) {
@@ -14,6 +14,9 @@ export function getReleases (callback) {
     let data = []
     if (typeof response.data !== 'undefined' && response.data.length > 0) {
       let data = response.data.slice()
+      data.map((item) => {
+        item.merged = JSON.parse(item.merged) // Convert string to boolean
+      })
       // Derive headers from response keys, strip any values starting with _
       let keys = _.filter(Object.keys(data[0]), (key) => {
         return !_.startsWith(key, '_')

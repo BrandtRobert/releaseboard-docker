@@ -42,7 +42,7 @@
   import * as requestHandler from './requesthandler.js'
 
   export default {
-    name: app,
+    name: 'app',
     components: {
       DataTable,
       NewReleaseDialog,
@@ -56,7 +56,7 @@
         items: [],
         alert_success: false,
         showReleaseModal: false,
-        showDeleteModal: false,
+        showDeleteModal: false
       }
     },
     mounted() {
@@ -83,11 +83,10 @@
           package: pack,
           release: release,
           version: version,
-          merged: false
+          merged: 'false'
         }
         requestHandler.addNewRelease(newRelease, () => {
-          // figure out why getTableData doesn't update fast enough
-          this.updateTable()
+          this.getTableData()
           this.showReleaseModal = false
           this.set_success()
         })
@@ -100,7 +99,7 @@
       },
       deleteSelected (items) {
         requestHandler.deleteSelectedReleases(items, () => {
-          this.updateTable()
+          this.getTableData()
           this.showDeleteModal = false
         })
       }

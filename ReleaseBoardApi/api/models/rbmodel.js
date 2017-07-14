@@ -35,7 +35,7 @@ connection.query(`
   })
 
 module.exports.insert = (release, callback) => {
-  let merged = (release.merged === 'true') ? 1 : 0
+  let merged = handleBool(release.merged)
   release._id = uuid().toString().replace(/-/g, '')
   connection.query('INSERT INTO releases VALUES (?,?,?,?,?)',
     [release._id, release.package, release.release, release.version, merged],
@@ -48,7 +48,7 @@ module.exports.insert = (release, callback) => {
 }
 
 module.exports.update = (release, callback) => {
-  let merged = (release.merged === 'true') ? 1 : 0
+  let merged = handleBool(release.merged)
   connection.query('UPDATE releases SET package = ?, `release` = ?, version = ?, merged = ? WHERE id = ?',
     [release.package, release.release, release.version, merged, release._id],
     (error) => {
@@ -82,4 +82,20 @@ module.exports.delete = (id, callback) => {
       }
       callback()
     })
+}
+
+/**
+ * Takes data of unknown boolean representation and returns it as either 1 or 0
+ * @param {*} unknown type
+ */
+function handleBool (unknown) {
+  if (typeof unknown === 'boolean') {
+    return (unknown) ? 1 : 0
+  } else if (typeof unknown === 'string') {
+    return (unknown === 'true') ? 1 : 0
+  } else if (typeof unknown === 'number') {
+    return (unknown === 0) ? 0 : 1
+  } else {
+    return 0
+  }
 }
