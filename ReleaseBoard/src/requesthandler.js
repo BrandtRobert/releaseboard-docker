@@ -4,8 +4,9 @@ import _ from 'lodash'
 export var _server = axios.create({
   // Base url should be whatever the url of the Nginx server is
   // Nginx proxies all requests with '/releases' to http://api:3000
-  // baseURL: 'http://localhost'
-  baseURL: 'http://localhost:3000'
+  baseURL: 'http://localhost'
+  // localhost:3000 is used for testing purposes
+  // baseURL: 'http://localhost:3000'
 })
 
 export function getReleases (callback) {

@@ -4,20 +4,20 @@ var uuid = require('uuid')
 
 // Test connect
 
-var connection = mysql.createConnection({
-  user: 'brandt',
-  password: 'Telecaster1',
-  database: 'releasedb'
-})
+// var connection = mysql.createConnection({
+//   user: 'brandt',
+//   password: 'Telecaster1',
+//   database: 'releasedb'
+// })
 
 // Docker Connect
 
-// var connection = mysql.createConnection({
-//   host: 'mysql',
-//   user: 'rb_user',
-//   password: 'banana',
-//   database: 'releasedb'
-// })
+var connection = mysql.createConnection({
+  host: 'mysql',
+  user: 'rb_user',
+  password: 'banana',
+  database: 'releasedb'
+})
 
 connection.query(`
   CREATE TABLE IF NOT EXISTS releases (
