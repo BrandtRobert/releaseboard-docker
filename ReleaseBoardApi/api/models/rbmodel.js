@@ -1,66 +1,55 @@
 'use strict'
 var mysql = require('mysql')
 var uuid = require('uuid')
-
+var init = require('./initdb.js')
 // Test connect
 
-// var connection = mysql.createConnection({
-//   user: 'brandt',
-//   password: 'Telecaster1',
-//   database: 'releasedb'
-// })
-
-// Docker Connect
-
 var connection = mysql.createConnection({
-  host: 'mysql',
-  user: 'rb_user',
-  password: 'banana',
+  user: 'brandt',
+  password: 'Telecaster1',
   database: 'releasedb'
 })
 
-connection.query(`
-  CREATE TABLE IF NOT EXISTS releases (
-      id char(32) PRIMARY KEY NOT NULL,
-      package varchar(50),
-      \`release\` varchar(50),
-      version varchar(50),
-      merged boolean default false
-  )
-`,
-  (error) => {
+// Docker Connect
+
+// var connection = mysql.createConnection({
+//   host: 'mysql',
+//   user: 'rb_user',
+//   password: 'banana',
+//   database: 'releasedb'
+// })
+
+init.initDb(connection)
+
+module.exports.insert = (release, callback) => {
+  release.merged = handleBool(release.merged)
+  let id = [uuid().toString().replace(/-/g, '')]
+  let values = id.concat(Object.values(release))
+  connection.query('INSERT INTO releases VALUES (?,?,?,?,?)', values, (error) => {
     if (error) {
       throw error
     }
+    release._id = id
+    release.merged = (release.merged === 1) ? 'true' : 'false'
+    callback(release)
   })
-
-module.exports.insert = (release, callback) => {
-  let merged = handleBool(release.merged)
-  release._id = uuid().toString().replace(/-/g, '')
-  connection.query('INSERT INTO releases VALUES (?,?,?,?,?)',
-    [release._id, release.package, release.release, release.version, merged],
-    (error) => {
-      if (error) {
-        throw error
-      }
-      callback(release)
-    })
 }
 
 module.exports.update = (release, callback) => {
-  let merged = handleBool(release.merged)
-  connection.query('UPDATE releases SET package = ?, `release` = ?, version = ?, merged = ? WHERE id = ?',
-    [release.package, release.release, release.version, merged, release._id],
+  release.merged = handleBool(release.merged)
+  let values = Object.values(release)
+  connection.query('UPDATE releases SET package = ?, production = ?, development = ?, merged = ? WHERE id = ?', values,
     (error) => {
       if (error) {
         throw error
       }
+      release.merged = (release.merged === 1) ? 'true' : 'false'
       callback(release)
     })
 }
 
 module.exports.getReleases = (callback) => {
-  connection.query('SELECT * FROM releases', (error, data) => {
+  connection.query('SELECT * FROM releases ORDER BY package', (error, data) => {
     if (error) {
       throw error
     }
@@ -75,13 +64,12 @@ module.exports.getReleases = (callback) => {
 }
 
 module.exports.delete = (id, callback) => {
-  connection.query('DELETE FROM releases WHERE id = ?',
-    [id], (error) => {
-      if (error) {
-        throw error
-      }
-      callback()
-    })
+  connection.query('DELETE FROM releases WHERE id = ?', [id], (error) => {
+    if (error) {
+      throw error
+    }
+    callback()
+  })
 }
 
 /**

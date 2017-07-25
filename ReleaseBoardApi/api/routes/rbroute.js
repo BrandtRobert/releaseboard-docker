@@ -4,9 +4,9 @@ module.exports = function (app) {
 
   app.route('/releases')
     .get(releases.get_all_releases)
-    .post(releases.create_release)
+    // .post(releases.create_release)
 
   app.route('/releases/:id')
     .put(releases.update_release)
-    .delete(releases.delete_release)
+    // .delete(releases.delete_release)
 }

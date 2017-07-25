@@ -9,5 +9,5 @@ COPY ./index.html /usr/src/app
 COPY ./dist/* /usr/src/app/dist/
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 # Install prerequisites
-#Expose port 80
+# Expose port 80
 EXPOSE 80

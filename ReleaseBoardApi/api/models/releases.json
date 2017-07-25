@@ -1,0 +1,46 @@
+{
+    "releases": [
+        {
+            "package": "Audit-Web",
+            "production": "",
+            "development": "",
+            "merged": "false"
+        },
+        {
+            "package": "Config-API",
+            "production": "",
+            "development": "",
+            "merged": "false"
+        },
+        {
+            "package": "Dev-Core-Web",
+            "production": "",
+            "development": "",
+            "merged": "false"
+        },
+        {
+            "package": "Dev-ng-Player",
+            "production": "",
+            "development": "",
+            "merged": "false"
+        },
+        {
+            "package": "Nakika New Deploy",
+            "production": "",
+            "development": "",
+            "merged": "false"
+        },
+        {
+            "package": "Plugin",
+            "production": "",
+            "development": "",
+            "merged": "false"
+        },
+        {
+            "package": "Service Layer",
+            "production": "",
+            "development": "",
+            "merged": "false"
+        }
+    ]
+}
