@@ -4,9 +4,9 @@ import _ from 'lodash'
 export var _server = axios.create({
   // Base url should be whatever the url of the Nginx server is
   // Nginx proxies all requests with '/releases' to http://api:3000
-  baseURL: 'http://localhost'
+  // baseURL: 'http://localhost'
   // localhost:3000 is used for testing purposes
-  // baseURL: 'http://localhost:3000'
+  baseURL: 'http://localhost:3000'
 })
 
 export function getReleases (callback) {
@@ -46,20 +46,6 @@ export function postChanges (data, callback) {
   data.map((release) => {
     let url = '/releases/' + release._id
     let request = _server.put(url, release)
-    promises.push(request)
-  })
-  axios.all(promises).then(callback)
-}
-
-export function addNewRelease (data, callback) {
-  _server.post('/releases', data).then(callback)
-}
-
-export function deleteSelectedReleases (data, callback) {
-  let promises = []
-  data.map((release) => {
-    let url = '/releases/' + release._id
-    let request = _server.delete(url, release)
     promises.push(request)
   })
   axios.all(promises).then(callback)

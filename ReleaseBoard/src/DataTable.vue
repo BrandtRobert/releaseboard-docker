@@ -10,23 +10,18 @@
     </span>
   </template>
   <template slot="items" scope="props">
-    <td>
-      <v-text-field :value="props.item.package" v-model="props.item.package">
-      </v-text-field>
-    </td>
+    <td class="text-xs-left">{{ props.item.package }}</td>
+    <td class="text-xs-left">{{ props.item.production }}</td>
     <td class="text-xs-right">
-      <v-text-field :value="props.item.release" v-model="props.item.release">
-      </v-text-field>
-    </td>
-    <td class="text-xs-right">
-      <v-text-field :value="props.item.version" v-model="props.item.version">
+      <v-text-field :value="props.item.development" v-model="props.item.development" v-on:blur="updateTable">
       </v-text-field>
     </td>
     <td> 
-      <v-checkbox
+      <v-checkbox 
         hide-details
         success
         v-model="props.item.merged"
+        v-on:click.native="updateTable"
       ></v-checkbox>
     </td>
   </template>
@@ -35,7 +30,16 @@
 
 <script>
 export default {
-  props: ['headers', 'items']
+  props: {
+    'headers': {type: Array}, 
+    'items': {type: Array}, 
+    'updateTable': {type: Function}
+  },
+  data () {
+    return {
+      watched: false
+    }
+  }
 }
 </script>
 

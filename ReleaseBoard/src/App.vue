@@ -7,27 +7,27 @@
       <v-container fluid>
         <v-layout column>
           <v-flex xs12>
-            <data-table :headers="headers" :items="items" :removeSelected="deleteSelected"></data-table>
+            <data-table :headers="headers" :items="items" :updateTable="updateTable"></data-table>
           </v-flex>
         </v-layout>
-        <v-layout row mt-2>
-          <v-flex xs12 text-xs-center>
-            <v-btn success light v-on:click.native="updateTable">Save Changes</v-btn>
-            <v-btn primary light v-on:click.native.stop="showReleaseModal = true">Add New Release</v-btn>
-            <v-btn class="red" light v-on:click.native="showDeleteModal = true">Delete Releases</v-btn>
-          </v-flex>
+        <v-layout row justify-center style="position: relative;" class='mt-2'>
+          <v-dialog v-model="dialog" lazy absolute>
+            <v-btn primary dark slot="activator" class="white--text">Start New Release</v-btn>
+            <v-card>
+              <v-card-title>
+                <div class="headline">Are you sure you want to start a new release?</div>
+              </v-card-title>
+              <v-card-text>Starting a new release will remove everything from the developer columns, 
+                but production columns will remain intact
+              </v-card-text>
+              <v-card-row actions>
+                <v-btn class="green--text darken-1 ml-5" flat="flat" @click.native="dialog = false">No</v-btn>
+                <v-btn class="green--text darken-1 ml-1" flat="flat" @click.native="startNewRelease()">Yes</v-btn>
+              </v-card-row actions>
+            </v-card>
+          </v-dialog>
         </v-layout>
-        <v-layout row mt-2>
-          <v-flex xs12 text-xs-center>
-            <v-alert success transition="scale-transition" dismissible v-model="alert_success">Changes Saved!</v-alert>
-          </v-flex>
-        </v-layout>
-        <new-release-dialog :showDialog="showReleaseModal" :submitRelease="addNewRelease"
-          :closeDialog="closeReleaseModal"></new-release-dialog>
-        <delete-release-dialog :showDialog="showDeleteModal" :items="items" 
-          :close="closeDeleteModal" :delete="deleteSelected"></delete-release-dialog>
       </v-container>
-
     </main>
     <v-footer :fixed="fixed">
       <span>&copy; 2017</span>
@@ -54,9 +54,7 @@
         title: 'Envysion Engineering Team -- Releases and Versioning',
         headers: [],
         items: [],
-        alert_success: false,
-        showReleaseModal: false,
-        showDeleteModal: false
+        dialog: false
       }
     },
     mounted() {
@@ -73,35 +71,19 @@
         })
       },
       updateTable () {
+        console.log('Update called')
         requestHandler.postChanges(this.items, (err) => { 
             this.getTableData()
             this.set_success()
         })
       },
-      addNewRelease (pack, release, version) {
-        let newRelease = {
-          package: pack,
-          release: release,
-          version: version,
-          merged: 'false'
-        }
-        requestHandler.addNewRelease(newRelease, () => {
-          this.getTableData()
-          this.showReleaseModal = false
-          this.set_success()
+      startNewRelease () {
+        this.dialog = false
+        this.items.map((i) => {
+          i.development = ''
+          i.merged = false
         })
-      },
-      closeReleaseModal () {
-        this.showReleaseModal = false
-      },
-      closeDeleteModal () {
-        this.showDeleteModal = false
-      },
-      deleteSelected (items) {
-        requestHandler.deleteSelectedReleases(items, () => {
-          this.getTableData()
-          this.showDeleteModal = false
-        })
+        this.updateTable()
       }
     }
   }
