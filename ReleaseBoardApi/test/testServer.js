@@ -19,7 +19,8 @@ describe('Testing server responses to GET, PUT', (done) => {
       package: 'Audit-Web',
       production: '',
       development: '',
-      merged: 'false'
+      MOP: 'false',
+      tagged: 'false'
     }
     request.get(baseURL, (err, response, body) => {
       if (err) {
@@ -38,7 +39,9 @@ describe('Testing server responses to GET, PUT', (done) => {
       package: 'Audit-Web',
       production: '123',
       development: '123',
-      merged: 'true'
+      MOP: 'true',
+      tagged: 'true',
+      _id
     }
     var url = baseURL + _id
     request.put(url, { form: updatedRelease }, (err, response, body) => {
@@ -47,6 +50,7 @@ describe('Testing server responses to GET, PUT', (done) => {
       }
       let received = JSON.parse(body)
       delete received._id
+      delete updatedRelease._id
       assert.deepEqual(updatedRelease, received)
       updatedRelease.production = ''
       updatedRelease.development = ''

@@ -1,5 +1,5 @@
 #Define Node.js image to use
-FROM node:boron
+FROM node:latest
 # Create app directory
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
@@ -11,4 +11,4 @@ COPY . /usr/src/app
 # Expose port 3000
 EXPOSE 3000
 # Start the application
-CMD ["npm", "run", "prod"]
+CMD ["npm", "run", "dev"]

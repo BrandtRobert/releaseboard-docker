@@ -13,7 +13,6 @@ describe('Release board db model', () => {
       var expected = JSON.parse(data).releases
       model.getReleases((releases) => {
         for (var i = 0; i < releases.length; i++) {
-          console.log(JSON.stringify(releases))
           assert.deepEqual(expected[i], releases[i])
         }
         done()
@@ -26,13 +25,14 @@ describe('Release board db model', () => {
       package: 'Service',
       production: '506',
       development: '1.2.3',
-      merged: 'false'
+      MOP: 'false',
+      tagged: 'false'
     }
-    // release.package = 'Webapp'
-    // release._id = _id
-    // model.update(release, (resData) => {
-    //   assert.deepEqual(release, resData)
-    done()
-    // })
+    release.package = 'Webapp'
+    release._id = _id
+    model.update(release, (resData) => {
+      assert.deepEqual(release, resData)
+      done()
+    })
   })
 })
