@@ -22,28 +22,32 @@ var connection = mysql.createConnection({
 init.initDb(connection)
 
 module.exports.insert = (release, callback) => {
-  release.merged = handleBool(release.merged)
+  release.MOP = handleBool(release.MOP)
+  release.tagged = handleBool(release.tagged)
   let id = [uuid().toString().replace(/-/g, '')]
   let values = id.concat(Object.values(release))
-  connection.query('INSERT INTO releases VALUES (?,?,?,?,?)', values, (error) => {
+  connection.query('INSERT INTO releases VALUES (?,?,?,?,?,?)', values, (error) => {
     if (error) {
       throw error
     }
     release._id = id
-    release.merged = (release.merged === 1) ? 'true' : 'false'
+    release.MOP = (release.MOP === 1) ? 'true' : 'false'
+    release.tagged = (release.tagged === 1) ? 'true' : 'false'
     callback(release)
   })
 }
 
 module.exports.update = (release, callback) => {
-  release.merged = handleBool(release.merged)
+  release.MOP = handleBool(release.MOP)
+  release.tagged = handleBool(release.tagged)
   let values = Object.values(release)
-  connection.query('UPDATE releases SET package = ?, production = ?, development = ?, merged = ? WHERE id = ?', values,
+  connection.query('UPDATE releases SET package = ?, production = ?, development = ?, MOP = ?, tagged = ? WHERE id = ?', values,
     (error) => {
       if (error) {
         throw error
       }
-      release.merged = (release.merged === 1) ? 'true' : 'false'
+      release.MOP = (release.MOP === 1) ? 'true' : 'false'
+      release.tagged = (release.tagged === 1) ? 'true' : 'false'
       callback(release)
     })
 }
@@ -55,7 +59,8 @@ module.exports.getReleases = (callback) => {
     }
     // Convert 1's and 0's to true/false
     data.map((r) => {
-      r.merged = (r.merged === 1) ? 'true' : 'false'
+      r.MOP = (r.MOP === 1) ? 'true' : 'false'
+      r.tagged = (r.tagged === 1) ? 'true' : 'false'
       r._id = r.id.slice(0) // Make a copy of the id
       delete r.id
     })

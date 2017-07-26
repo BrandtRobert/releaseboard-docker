@@ -1,46 +1,52 @@
 {
-    "releases": [
-        {
-            "package": "Audit-Web",
-            "production": "",
-            "development": "",
-            "merged": "false"
-        },
-        {
-            "package": "Config-API",
-            "production": "",
-            "development": "",
-            "merged": "false"
-        },
-        {
-            "package": "Dev-Core-Web",
-            "production": "",
-            "development": "",
-            "merged": "false"
-        },
-        {
-            "package": "Dev-ng-Player",
-            "production": "",
-            "development": "",
-            "merged": "false"
-        },
-        {
-            "package": "Nakika New Deploy",
-            "production": "",
-            "development": "",
-            "merged": "false"
-        },
-        {
-            "package": "Plugin",
-            "production": "",
-            "development": "",
-            "merged": "false"
-        },
-        {
-            "package": "Service Layer",
-            "production": "",
-            "development": "",
-            "merged": "false"
-        }
-    ]
+  "releases": [{
+      "package": "Audit-Web",
+      "production": "",
+      "development": "",
+      "mop": "false",
+      "tagged": "false"
+    },
+    {
+      "package": "Config-API",
+      "production": "",
+      "development": "",
+      "mop": "false",
+      "tagged": "false"
+    },
+    {
+      "package": "Dev-Core-Web",
+      "production": "",
+      "development": "",
+      "mop": "false",
+      "tagged": "false"
+    },
+    {
+      "package": "Dev-ng-Player",
+      "production": "",
+      "development": "",
+      "mop": "false",
+      "tagged": "false"
+    },
+    {
+      "package": "Nakika New Deploy",
+      "production": "",
+      "development": "",
+      "mop": "false",
+      "tagged": "false"
+    },
+    {
+      "package": "Plugin",
+      "production": "",
+      "development": "",
+      "mop": "false",
+      "tagged": "false"
+    },
+    {
+      "package": "Service Layer",
+      "production": "",
+      "development": "",
+      "mop": "false",
+      "tagged": "false"
+    }
+  ]
 }

@@ -9,7 +9,8 @@ module.exports.initDb = function (connection) {
       package varchar(50),
       production varchar(50),
       development varchar(50),
-      merged boolean default false
+      MOP boolean default false,
+      tagged boolean default false
   )
 `,
     (error) => {
@@ -45,8 +46,9 @@ function getReleases (callback) {
 }
 
 function pushReleaseToDb (connection, release) {
-  release.merged = handleBool(release.merged)
-  let sql = 'INSERT INTO releases VALUES (?, ?, ?, ?, ?)'
+  release.mop = handleBool(release.mop)
+  release.tagged = handleBool(release.tagged)
+  let sql = 'INSERT INTO releases VALUES (?, ?, ?, ?, ?, ?)'
   let id = [uuid().toString().replace(/-/g, '')]
   let values = id.concat(Object.values(release))
   connection.query(sql, values, (err) => {

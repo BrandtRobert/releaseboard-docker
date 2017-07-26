@@ -16,7 +16,8 @@ export function getReleases (callback) {
     if (typeof response.data !== 'undefined' && response.data.length > 0) {
       let data = response.data.slice()
       data.map((item) => {
-        item.merged = JSON.parse(item.merged) // Convert string to boolean
+        item.MOP = JSON.parse(item.MOP) // Convert string to boolean
+        item.tagged = JSON.parse(item.tagged) // Convert string to booleanß
       })
       // Derive headers from response keys, strip any values starting with _
       let keys = _.filter(Object.keys(data[0]), (key) => {
