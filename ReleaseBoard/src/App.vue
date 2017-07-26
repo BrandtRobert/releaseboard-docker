@@ -12,7 +12,10 @@
         </v-layout>
         <v-layout row mt-2>
           <v-flex xs12 text-xs-center>
-            <v-btn error dark class="white--text" v-on:click.native.stop="toggleEditDialog()">Edit Production</v-btn>
+            <v-btn error dark class="white--text" v-on:click.native.stop="toggleEditDialog()">
+              <span v-if="!productionEditing">Edit Production</span>
+              <span v-else>Toggle Editing</span>
+            </v-btn>
             <v-btn primary dark class="white--text" v-on:click.native.stop="dialog = true">Start New Release</v-btn>
             <v-btn warning dark class="white--text" v-on:click.native.stop="promoteDialog = true">Promote to production</v-btn>
           </v-flex>   
