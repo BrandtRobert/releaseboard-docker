@@ -11,9 +11,10 @@ describe('App.vue', () => {
       title: 'Envysion Engineering Team -- Releases and Versioning',
       headers: [],
       items: [],
-      alert_success: false,
-      showReleaseModal: false,
-      showDeleteModal: false
+      editDialog: false,
+      dialog: false,
+      promoteDialog: false,
+      productionEditing: false
     }
     const defaultData = app.data()
     expect(expectedData).toEqual(defaultData)
@@ -34,16 +35,10 @@ describe('App.vue', () => {
     const reqComp = new Vue(app)
     spyOn(request, 'getReleases')
     spyOn(request, 'postChanges')
-    spyOn(request, 'addNewRelease')
-    spyOn(request, 'deleteSelectedReleases')
     reqComp.getTableData()
     reqComp.updateTable()
-    reqComp.addNewRelease()
-    reqComp.deleteSelected()
     expect(request.getReleases).toHaveBeenCalled()
     expect(request.postChanges).toHaveBeenCalled()
-    expect(request.addNewRelease).toHaveBeenCalled()
-    expect(request.deleteSelectedReleases).toHaveBeenCalled()
     done()
   })
 })

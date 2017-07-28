@@ -41,26 +41,4 @@ describe('Calls the proper axios methods for each request', () => {
     expect(request._server.put).toHaveBeenCalled()
     done()
   })
-
-  it('Makes a delete request to localhost:3000/releases', (done) => {
-    spyOn(request._server, 'delete').and.callFake((url, release) => {
-      expect(url).toBe('/releases/put123')
-      expect(_.isEqual(release, sampleData))
-      return Promise.resolve(promiseData)
-    })
-    request.deleteSelectedReleases([sampleData], () => {})
-    expect(request._server.delete).toHaveBeenCalled()
-    done()
-  })
-
-  it('Makes a post request to localhost:3000/releases', (done) => {
-    spyOn(request._server, 'post').and.callFake((url, release) => {
-      expect(url).toBe('/releases')
-      expect(_.isEqual(release, sampleData))
-      return Promise.resolve(promiseData)
-    })
-    request.addNewRelease([sampleData], () => {})
-    expect(request._server.post).toHaveBeenCalled()
-    done()
-  })
 })
