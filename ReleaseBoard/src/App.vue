@@ -106,7 +106,6 @@
         })
       },
       updateTable () {
-        console.log('Update called')
         requestHandler.postChanges(this.items, (err) => { 
             this.getTableData()
             this.set_success()
@@ -130,7 +129,6 @@
             i.MOP = true
           }
         })
-        console.log(JSON.stringify(this.items))
         this.updateTable()
       },
       toggleEditing () {
